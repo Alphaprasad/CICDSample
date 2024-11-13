@@ -20,11 +20,6 @@ jobs:
     - name: Build Docker image
       run: docker build . --file CICDDemo/Dockerfile --tag alphaprasad01/cicddemo:latest
 
-    - name: Run custom script
-      run: |
-        docker run --rm alphaprasad01/cicddemo:latest /bin/bash -c "your-test-command"
-
-
     - name: Push Docker image
       if: success()  # Only push if tests pass
       run: docker push alphaprasad01/cicddemo:latest
