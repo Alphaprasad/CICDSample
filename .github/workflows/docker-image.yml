@@ -1,14 +1,16 @@
-name: CI Pipeline
+name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "main"  # You can specify any branch here
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - "main"  # This triggers the workflow on PRs to the 'main' branch
 
 jobs:
-  build-and-test:
-    runs-on: windows-latest
+  build-and-push:
+    runs-on: windows-latest  # or any other runner you want
 
     steps:
     - name: Checkout code
@@ -21,5 +23,4 @@ jobs:
       run: docker build . --file CICDDemo/Dockerfile --tag alphaprasad01/cicddemo:latest
 
     - name: Push Docker image
-      if: success()  # Only push if tests pass
       run: docker push alphaprasad01/cicddemo:latest
