@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: windows-latest  # or any other runner you want
+   runs-on: windows-2022 
 
     steps:
     - name: Checkout code
