@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: CI Pipeline
 
 on:
   push:
@@ -7,17 +7,24 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag alphaprasad01/cicddemo:$(Get-Date -Format "yyyyMMddHHmmss")
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --tag alphaprasad01/cicddemo:latest
+
+    - name: Run tests
+      run: |
+        # Replace with your test commands
+        docker run alphaprasad01/cicddemo:latest test-command
 
     - name: Push Docker image
-      run: docker push alphaprasad01/cicddemo:$(Get-Date -Format "yyyyMMddHHmmss")
+      if: success()  # Only push if tests pass
+      run: docker push alphaprasad01/cicddemo:latest
