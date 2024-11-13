@@ -18,7 +18,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Build Docker image
-      run: docker build . --file Dockerfile --tag alphaprasad01/cicddemo:latest
+      run: docker build . --file CICDDemo/Dockerfile --tag alphaprasad01/cicddemo:latest
 
     - name: Run tests
       run: |
