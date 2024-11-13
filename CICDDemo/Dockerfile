@@ -6,6 +6,10 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019 AS base
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base_runtime
  
+ # Set environment variables
+ENV DB_CONNECTION_STRING="xyz"
+ENV DB_DEPLOYMENTENVIRONMENT="fromDocker"
+
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
