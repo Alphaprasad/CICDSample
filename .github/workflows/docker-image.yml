@@ -7,12 +7,17 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file CICDDemo --latest alphaprasad01/CICDDemo:$(Get-Date -Format "yyyyMMddHHmmss")
+
+    - name: Push Docker image
+      run: docker push alphaprasad01/CICDDemo:$(Get-Date -Format "yyyyMMddHHmmss")
