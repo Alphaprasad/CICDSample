@@ -15,12 +15,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
-    # Log in to AWS ECR using aws-actions/amazon-ecr-login v2
+   # Log in to AWS ECR using aws-actions/amazon-ecr-login v2
     - name: Log in to AWS ECR
       uses: aws-actions/amazon-ecr-login@v2
       with:
-        region: ${{ secrets.AWS_REGION }}  # Use the region stored in secrets
+        registries: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
     # Tag the Docker image for AWS ECR
     - name: Tag Docker image for ECR
