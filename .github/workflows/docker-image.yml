@@ -16,18 +16,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    # Log in to AWS ECR using aws-actions/amazon-ecr-login (AWS credentials)
     - name: Log in to AWS ECR
-      run: |
-        aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" | docker login --username AWS --password-stdin "${{ secrets.AWS_ACCOUNT_ID }}".dkr.ecr."${{ secrets.AWS_REGION }}".amazonaws.com
+      uses: aws-actions/amazon-ecr-login@v1
+      with:
+        region: ${{ secrets.AWS_REGION }}  # Use the region stored in secrets
 
+    # Tag the Docker image for AWS ECR
     - name: Tag Docker image for ECR
-      env:
-        AWS_REGION: ap-south-1
-        INFRA_ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT_ID }}
-      run: docker tag alphaprasad01/cicddemo:latest $INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com/cicddemo:latest
+      run: docker tag alphaprasad01/cicddemo:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cicddemo:latest
 
+    # Push the Docker image to AWS ECR
     - name: Push Docker image to AWS ECR
-      env:
-        AWS_REGION: ap-south-1
-        INFRA_ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT_ID }}
-      run: docker push $INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com/cicddemo:latest
+      run: |
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cicddemo:latest
