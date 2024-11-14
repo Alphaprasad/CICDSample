@@ -35,8 +35,8 @@ jobs:
 
     - name: Tag Docker image for ECR
       run: |
-        docker tag demo/cicddemo:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/vaveb2b-main-api:latest
+        docker tag demo/cicddemo:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/vaveb2b-vvft-api:latest
 
     - name: Push Docker image to AWS ECR
       run: |
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/vaveb2b-main-api:latest
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/vaveb2b-vvft-api:latest
