@@ -18,7 +18,7 @@ jobs:
       
     - name: Log in to AWS ECR
       run: |
-        docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 67398044360.dkr.ecr.ap-south-1.amazonaws.com
+        docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 767398044360.dkr.ecr.ap-south-1.amazonaws.com
 
     - name: Tag Docker image for ECR
       env:
