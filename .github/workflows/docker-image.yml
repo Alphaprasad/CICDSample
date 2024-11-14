@@ -3,14 +3,14 @@ name: Docker Image CI
 on:
   push:
     branches:
-      - "main"  # You can specify any branch here
+      - "main"  # Trigger on push to the main branch
   pull_request:
     branches:
-      - "main"  # This triggers the workflow on PRs to the 'main' branch
+      - "main"  # Trigger on PRs to the 'main' branch
 
 jobs:
   build-and-push:
-    runs-on: windows-2019
+    runs-on: windows-2019  # Or any other suitable runner
 
     steps:
     - name: Checkout code
@@ -21,20 +21,22 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }} 
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
       with:
-        region: ${{ secrets.AWS_REGION }}  
+        region: ${{ secrets.AWS_REGION }}
 
+    - name: Build Docker image
+      run: |
+        docker build -t demo/cicddemo:latest .
 
-    # Tag the Docker image for AWS ECR
     - name: Tag Docker image for ECR
-      run: docker tag alphaprasad01/cicddemo:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cicddemo:latest
+      run: |
+        docker tag demo/cicddemo:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cicddemo:latest
 
-    # Push the Docker image to AWS ECR
     - name: Push Docker image to AWS ECR
       run: |
         docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cicddemo:latest
