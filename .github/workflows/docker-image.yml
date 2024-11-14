@@ -15,22 +15,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
-    - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Build Docker image
-      run: docker build . --file CICDDemo/Dockerfile --tag alphaprasad01/cicddemo:latest
-
-    - name: Push Docker image
-      run: docker push alphaprasad01/cicddemo:latest
       
     - name: Log in to AWS ECR
       env:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         INFRA_ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT_ID }}
       run: |
-        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com
+        echo "AWS Region: $AWS_REGION"
+        aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com"
 
     - name: Tag Docker image for ECR
       env:
