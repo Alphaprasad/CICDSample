@@ -18,7 +18,7 @@ jobs:
       
     - name: Log in to AWS ECR
       env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_REGION: ap-south-1
         INFRA_ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT_ID }}
       run: |
         echo "AWS Region: $AWS_REGION"
@@ -26,12 +26,12 @@ jobs:
 
     - name: Tag Docker image for ECR
       env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_REGION: ap-south-1
         INFRA_ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT_ID }}
       run: docker tag alphaprasad01/cicddemo:latest $INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com/cicddemo:latest
 
     - name: Push Docker image to AWS ECR
       env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_REGION: ap-south-1
         INFRA_ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT_ID }}
       run: docker push $INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com/cicddemo:latest
