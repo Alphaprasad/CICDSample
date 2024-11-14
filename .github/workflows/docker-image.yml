@@ -45,4 +45,3 @@ jobs:
       run: |
         echo "Deploying to ECS..."
         aws ecs update-service --cluster vaveb2b-vvft-cluster --service vaveb2b-vvft-api-svc --force-new-deployment --region ${{ secrets.AWS_REGION }}
-
