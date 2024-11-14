@@ -16,9 +16,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    # Log in to AWS ECR using aws-actions/amazon-ecr-login (AWS credentials)
+    # Log in to AWS ECR using aws-actions/amazon-ecr-login v2
     - name: Log in to AWS ECR
-      uses: aws-actions/amazon-ecr-login@v1
+      uses: aws-actions/amazon-ecr-login@v2
       with:
         region: ${{ secrets.AWS_REGION }}  # Use the region stored in secrets
 
