@@ -18,11 +18,10 @@ jobs:
       
     - name: Log in to AWS ECR
       env:
-        AWS_REGION: ap-south-1
+        AWS_REGION: ${{ secrets.AWS_REGION }}
         INFRA_ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT_ID }}
       run: |
-        echo "AWS Region: $AWS_REGION"
-        aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com"
+        docker login -u AWS -p $(aws ecr get-login-password --region $AWS_REGION) $INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com
 
     - name: Tag Docker image for ECR
       env:
