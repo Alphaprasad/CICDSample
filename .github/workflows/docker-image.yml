@@ -31,7 +31,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t demo/cicddemo:latest .
+        docker build -t demo/cicddemo:latest --file CICDDemo/Dockerfile .
 
     - name: Tag Docker image for ECR
       run: |
