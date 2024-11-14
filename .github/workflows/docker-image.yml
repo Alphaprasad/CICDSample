@@ -23,7 +23,9 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        docker login -u AWS -p $(aws ecr get-login-password --region "$AWS_REGION") "$INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com"
+        echo "AWS Region: $AWS_REGION"
+        echo "Account Number: $INFRA_ACCOUNT_NUMBER"
+        aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$INFRA_ACCOUNT_NUMBER.dkr.ecr.$AWS_REGION.amazonaws.com"
 
 
     - name: Tag Docker image for ECR
