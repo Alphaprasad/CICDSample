@@ -42,10 +42,10 @@ jobs:
         docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/vaveb2b-vvft-api:latest
 
     - name: Deploy to ECS
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ECS_CLUSTER: vaveb2b-vvft-cluster  
-        SERVICE_NAME: vaveb2b-vvft-api-svc    
       run: |
         echo "Deploying to ECS..."
-        aws ecs update-service --cluster $AWS_ECS_CLUSTER --service $SERVICE_NAME --force-new-deployment --region $AWS_REGION
+        aws ecs update-service \
+          --cluster vaveb2b-vvft-cluster  
+          --service vaveb2b-vvft-api-svc 
+          --force-new-deployment \
+          --region ${{ secrets.AWS_REGION }}
