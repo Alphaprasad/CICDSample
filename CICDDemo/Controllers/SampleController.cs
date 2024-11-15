@@ -13,6 +13,11 @@ namespace CICDDemo.Controllers
         {
             return "Hello";
         }
+        [HttpGet("health")]
+        public String GetHealthCheck()
+        {
+            return "Health check";
+        }
 
         [HttpGet("GetDeploymentEnvironment")]
         public String GetDeploymentEnvironment()
